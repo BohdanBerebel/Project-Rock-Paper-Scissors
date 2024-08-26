@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./js.js"></script>
     <style>
         button {
             width: 400px;
@@ -13,7 +12,7 @@
             color: yellowgreen;
             font-size: 50px;
             border: 25px groove violet;
-            display: block;
+            /* display: block; */
             margin: 0 auto;
         }
         body {
@@ -24,15 +23,28 @@
             text-align: center;
             color:bisque;
         }   
+        div {
+            margin: 20px;
+            color: white;
+            font-size: 24px
+            }
     </style>
 </head>
 <body>
+
     <h1>Welcome to My Rock Paper Scissors Project !!!</h1>
-<button id="play">Play an additional round!</button>
-<script>
-    document.getElementById('play').addEventListener("click", () => {
-    playRound(getHumanChoice(), getComputerChoice());
-});
-</script>
+
+    <div id="container">
+        <button id="Rock">Rock</button>
+        <button id="Paper">Paper</button>
+        <button id="Scissors">Scissors</button>
+    </div>
+
+    <div id="results" style="white-space: pre-line;">
+
+    </div>
+
+    <script src="./js.js"></script>
+
 </body>
 </html>

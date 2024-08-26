@@ -1,72 +1,82 @@
-const ROCK = 0;
-const PAPER = 1;
-const SCISSORS = 2;
+const ROCK = "Rock";
+const PAPER = "Paper";
+const SCISSORS = "Scissors";
+
 let round = 1;
+
+const div = document.querySelector("#container");
+const results = document.querySelector("#results");
+results.textContent = "";
+
+function convertor (number) {
+    switch (number) {
+        case 0:
+            return ROCK;
+        case 1:
+            return PAPER;
+        case 2:
+            return SCISSORS;
+        default:
+            console.log("ERROR")
+    }
+}
+
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 10);
     while (choice >= 3) {
         choice = Math.floor(Math.random() * 10)
     }
-    console.log("Comp's chosen: " + choice);
-    choice == ROCK ? console.log("Comp's chosen: ROCK") :
-    choice == PAPER ? console.log("Comp's chosen: PAPER") :
-    console.log("Comp's chosen: SCISSORS");
-    return choice;
+    choice == 0 ? results.textContent += `Comp's chosen: ${convertor(choice)}\n` :
+    choice == 1 ? results.textContent += `Comp's chosen: ${convertor(choice)}\n` :
+    results.textContent += `Comp's chosen: ${convertor(choice)}\n`;
+    return convertor(choice);
 }
 
-// getComputerChoice();
 
-function getHumanChoice() {
-    
-    let choice = prompt("Rock (enter 0), Paper (enter 1) or Scissors (enter 2)?");
-    while (choice === null || choice.trim() === "" || (!(choice == ROCK || choice == PAPER || choice == SCISSORS || false))) {
-        choice = prompt("You've input something wrong. Try again. Rock (enter 0), Paper (enter 1) or Scissors (enter 2)?");
-    }
-    console.log(`Round ${round}:`)
-    round++;
-    console.log("You've entered: " + choice);
-    choice == ROCK ? console.log("You've chosen: ROCK") :
-    choice == PAPER ? console.log("You've chosen: PAPER") :
-    console.log("You've chosen: SCISSORS")
-
+function getHumanChoice(target) {
+    let choice = target;
+    choice == ROCK ? results.textContent += `You've chosen: ${choice}\n` :
+    choice == PAPER ? results.textContent += `You've chosen: ${choice}\n` :
+    results.textContent += `You've chosen: ${choice}\n`
     return choice;
     }
-
-// getHumanChoice();
-
 
 let humanScore = 0, computerScore = 0;
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice == ROCK && computerChoice == PAPER) {
-        console.log("You lose! Paper beats Rock")
+        results.textContent += "You lose! Paper beats Rock\n"
         ++computerScore;
     } else if (humanChoice == PAPER && computerChoice == SCISSORS) {
-        console.log("You lose! Scissors beats Paper")
+        results.textContent += "You lose! Scissors beats Paper\n"
         ++computerScore;
     }
     else if (humanChoice == SCISSORS && computerChoice == ROCK) {
-        console.log("You lose! Rock beats Scissors")
+        results.textContent += "You lose! Rock beats Scissors\n"
         ++computerScore;
     }
-    else if (humanChoice == computerChoice) {console.log("Draw!")}
+    else if (humanChoice == computerChoice) {results.textContent += "Draw!\n"}
     else {
-        console.log("Congrats! You won!");
+        results.textContent += "Congrats! You won!\n";
         ++humanScore;
     }
-    console.log(`Score:\n
-        Human ${humanScore} : ${computerScore} Computer`)
+    results.textContent += `Score:\nHuman ${humanScore} : ${computerScore} Computer\n\n`
 }
 
-// playRound(getHumanChoice(), getComputerChoice());
-
-function playGame() {
-    for (let i = 1; i <= 5; i++) {
-    let humanSelection = getHumanChoice();
+function playGame(target) {
+    results.textContent += `Round ${round}:\n`;
+    round++;
+    let humanSelection = getHumanChoice(target);
     let computerSelection = getComputerChoice();
     playRound (humanSelection, computerSelection);
+    if(humanScore == 5 || computerScore == 5) {
+        const winnerAnnouncement = document.createElement("p");
+        humanScore > computerScore ? winnerAnnouncement.textContent = "Congratulations! You won!" :
+        winnerAnnouncement.textContent = "Unluckily, you lost... You may try again"
+        results.appendChild(winnerAnnouncement);
     }
-}
+    };
 
-playGame();
-
+div.addEventListener("click", (e) => {
+playGame(e.target.attributes.id.value);
+});
