@@ -73,7 +73,9 @@ function playGame(target) {
         const winnerAnnouncement = document.createElement("p");
         humanScore > computerScore ? winnerAnnouncement.textContent = "Congratulations! You won!" :
         winnerAnnouncement.textContent = "Unluckily, you lost... You may try again"
-        results.appendChild(winnerAnnouncement);
+        let resultCopy = winnerAnnouncement.cloneNode(true);
+        document.querySelector("body").insertBefore(winnerAnnouncement, results);
+        results.appendChild(resultCopy);
     }
     };
 
